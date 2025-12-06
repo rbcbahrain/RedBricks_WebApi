@@ -16,8 +16,55 @@ namespace RedBricksApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductType productType)
         {
-            await productTypeService.AddProductType(productType);
-            return CreatedAtAction(nameof(GetById), new { id = productType.TypeId }, productType);
+
+            if (productType == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+
+                if (!ModelState.IsValid)
+                    return BadRequest("Invalid product type data.");
+
+                string imagePath = string.Empty;
+
+                if (productType.Image != null && productType.Image.Length > 0)
+                {
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Pictures/Type");
+
+                    if (!Directory.Exists(uploadDir))
+                        Directory.CreateDirectory(uploadDir);
+
+                    var fileName = Guid.NewGuid() + Path.GetExtension(productType.Image.FileName);
+                    var filePath = Path.Combine(uploadDir, fileName);
+
+                    // THIS is correct: dto.Image.CopyToAsync(stream)
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await productType.Image.CopyToAsync(stream);
+                    }
+
+                    imagePath = $"/Picutures/Type/{fileName}";
+                }
+                productType.FileName = imagePath;
+                await productTypeService.AddProductType(productType);
+                // Success response ALWAYS JSON
+                return Ok(new
+                {
+                    message = "Product type created successfully"
+
+                });
+            }
+            catch (Exception ex)
+            {
+                // Error response ALWAYS JSON
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+
         }
 
         [HttpGet]
@@ -36,8 +83,20 @@ namespace RedBricksApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] ProductType productType)
         {
-            await productTypeService.UpdateProductType(productType);
-            return NoContent();
+            if (productType == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await productTypeService.UpdateProductType(productType);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
         [HttpDelete("{id}")]

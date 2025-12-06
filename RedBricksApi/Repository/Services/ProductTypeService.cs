@@ -46,7 +46,7 @@ namespace RedBricksApi.Repository.Services
                     productType.TypeId = reader.GetInt32(0);
                     productType.Name = reader.GetString(1);
                     productType.Description = reader.GetString(2);
-                    productType.Filename=reader.GetString(3);
+                    productType.FileName=reader.GetString(3);
                     productType.CategoryId = reader.GetInt32(4);
                     productType.Status = reader.GetBoolean(5);
                     productType.CreatedOn = reader.GetDateTime(6);
@@ -81,7 +81,7 @@ namespace RedBricksApi.Repository.Services
                         TypeId = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
-                        Filename = reader.GetString(3),
+                        FileName = reader.GetString(3),
                         CategoryId = reader.GetInt32(4),
                         Status = reader.GetBoolean(5),
                         CreatedOn = reader.GetDateTime(6),
@@ -108,7 +108,7 @@ namespace RedBricksApi.Repository.Services
                 };
                 command.Parameters.AddWithValue("@Name", productType.Name);
                 command.Parameters.AddWithValue("@Description", productType.Description);
-                command.Parameters.AddWithValue("@FilName", productType.Filename);
+                command.Parameters.AddWithValue("@FilName", productType.FileName);
                 command.Parameters.AddWithValue("@CategoryId", productType.CategoryId);
                 command.Parameters.AddWithValue("@Status", productType.Status);
 
@@ -135,7 +135,7 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@Id", productType.TypeId);
                 command.Parameters.AddWithValue("@Name", productType.Name);
                 command.Parameters.AddWithValue("@Description", productType.Description);
-                command.Parameters.AddWithValue("@FilName", productType.Filename);
+                command.Parameters.AddWithValue("@FilName", productType.FileName);
                 command.Parameters.AddWithValue("@CategoryId", productType.CategoryId);
                 command.Parameters.AddWithValue("@Status", productType.Status);
 

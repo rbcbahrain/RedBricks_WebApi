@@ -17,7 +17,7 @@ namespace RedBricksApi.Controllers
         public async Task<IActionResult> Create([FromForm] ProductCategory productCategory)
         {
             
-                       if (productCategory == null)
+            if (productCategory == null)
             {
                 return BadRequest();
             }
@@ -85,8 +85,19 @@ namespace RedBricksApi.Controllers
         [HttpPut ("UpdateCategory")]
         public async Task<IActionResult> Update([FromBody] ProductCategory productCategory)
         {
-            await productCategoryService.UpdateProductCategory(productCategory);
-            return NoContent();
+           if (productCategory==null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await productCategoryService.UpdateProductCategory(productCategory);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
         [HttpDelete("{id}")]

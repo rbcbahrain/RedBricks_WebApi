@@ -9,7 +9,8 @@ namespace RedBricksApi.Models
      
         public string Name { get; set; } =string.Empty;
         public string Description {  get; set; }=string.Empty;
-        public string Filename { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+        public IFormFile? Image { get; set; }
         public int CategoryId { get; set; } 
         public bool Status { get; set; }
         public DateTime CreatedOn { get; set; }
