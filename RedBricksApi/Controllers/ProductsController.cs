@@ -38,8 +38,8 @@ namespace RedBricksApi.Controllers
                 throw;
             }
         }
-        [HttpPost("addproduct")]
-        public async Task<IActionResult> Create([FromBody] Product product)
+        [HttpPost("AddProduct")]
+        public async Task<IActionResult> Create([FromForm] Product product)
         {
             if (product == null)
             {
@@ -73,7 +73,12 @@ namespace RedBricksApi.Controllers
                 }
                 product.FileName = imagePath;
                 await productService.AddProductAsync(product);
-                return CreatedAtAction(nameof(GetProductByIdAsync), new { id = product.ProductId }, product);
+                // Success response ALWAYS JSON
+                return Ok(new
+                {
+                    message = "Service created successfully"
+
+                });
             }
             catch (Exception ex)
             {
