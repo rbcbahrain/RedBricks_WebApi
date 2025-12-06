@@ -46,7 +46,7 @@ namespace RedBricksApi.Repository.Services
                     productCategory.Id = reader.GetInt32(0);
                     productCategory.Name = reader.GetString(1);
                     productCategory.Description = reader.GetString(2);
-                    productCategory.Filename=reader.GetString(3);
+                    productCategory.FileName=reader.GetString(3);
                     productCategory.Status = reader.GetBoolean(4);
                     productCategory.CreatedOn = reader.GetDateTime(5);
                     productCategory.UpdatedOn = reader.GetDateTime(6);
@@ -80,7 +80,7 @@ namespace RedBricksApi.Repository.Services
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
-                        Filename = reader.GetString(3),
+                        FileName = reader.GetString(3),
                         Status = reader.GetBoolean(4),
                         CreatedOn = reader.GetDateTime(5),
                         UpdatedOn = reader.GetDateTime(6)
@@ -106,7 +106,7 @@ namespace RedBricksApi.Repository.Services
                 };
                 command.Parameters.AddWithValue("@Name", productCategory.Name);
                 command.Parameters.AddWithValue("@Description", productCategory.Description);
-                command.Parameters.AddWithValue("@FilName", productCategory.Filename);
+                command.Parameters.AddWithValue("@FilName", productCategory.FileName);
                 command.Parameters.AddWithValue("@Status", productCategory.Status);
 
                 await connection.OpenAsync();
@@ -132,7 +132,7 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@Id", productCategory.Id);
                 command.Parameters.AddWithValue("@Name", productCategory.Name);
                 command.Parameters.AddWithValue("@Description", productCategory.Description);
-                command.Parameters.AddWithValue("@FilName", productCategory.Filename);
+                command.Parameters.AddWithValue("@FilName", productCategory.FileName);
                 command.Parameters.AddWithValue("@Status", productCategory.Status);
 
                 await connection.OpenAsync();
