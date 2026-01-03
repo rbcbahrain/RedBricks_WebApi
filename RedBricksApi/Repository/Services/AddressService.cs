@@ -88,7 +88,7 @@ namespace RedBricksApi.Repository.Services
                 //throw new NotImplementedException();
                 throw;            }
         }
-        public async Task<IEnumerable<Address>> GetAddress()
+        public async Task<IEnumerable<Address>> GetAddress(int userId)
         {
             try
             {
@@ -98,6 +98,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
+                command.Parameters.AddWithValue("@UserId", userId);
                 await connection.OpenAsync();
                 using var reader = await command.ExecuteReaderAsync();
 

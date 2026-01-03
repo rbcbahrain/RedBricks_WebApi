@@ -18,9 +18,9 @@ namespace RedBricksApi.Controllers
         }
 
         [HttpGet("Getaddresslist")]
-        public async Task<ActionResult<IEnumerable<Address>>> GetAddress()
+        public async Task<ActionResult<IEnumerable<Address>>> GetAddress(int userid)
         {
-            return Ok(await addressService.GetAddress());
+            return Ok(await addressService.GetAddress(userid));
 
         }
         [HttpGet("{id:int}")]

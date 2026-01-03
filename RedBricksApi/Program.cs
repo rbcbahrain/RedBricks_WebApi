@@ -22,7 +22,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
-
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 // Add services to the container.
 
 builder.Services.AddControllers();

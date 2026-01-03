@@ -7,7 +7,7 @@ namespace RedBricksApi.Repository.Interfaces
         public Task AddAddress(Address address);
         public Task UpdateAddress(Address address);
         public Task DeleteAddress(int addressId);
-        public Task<IEnumerable<Address>> GetAddress();
+        public Task<IEnumerable<Address>> GetAddress(int userId);
         public Task<Address> GetAddressById(int addressId);
     }
 }
