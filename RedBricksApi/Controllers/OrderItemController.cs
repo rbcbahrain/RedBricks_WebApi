@@ -14,7 +14,7 @@ namespace RedBricksApi.Controllers
         public async Task<IActionResult> Create([FromBody] OrderItems orderitem)
         {
             await orderItemService.AddOrderItems(orderitem);
-            return CreatedAtAction(nameof(GetById), new { id = orderitem.Id }, orderitem);
+            return CreatedAtAction(nameof(GetById), new { id = orderitem.OrderItemId }, orderitem);
         }
 
         [HttpGet("GetOrderItemlist")]

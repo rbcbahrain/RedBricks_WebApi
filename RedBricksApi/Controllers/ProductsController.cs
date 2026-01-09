@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RedBricksApi.Models;
 using RedBricksApi.Repository.Interfaces;
+using RedBricksApi.Repository.Services;
 
 namespace RedBricksApi.Controllers
 {
@@ -121,6 +122,21 @@ namespace RedBricksApi.Controllers
                 throw;
             }
         }
+        [HttpGet("CheckProduct")]
+        public async Task<bool> CheckProductExits(string productName)
+        {
+            try
+            {
+                bool result = await productService.CheckProductExistAsync(productName);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
     }
 }

@@ -35,7 +35,7 @@ namespace RedBricksApi.Repository.Services
             }
         }
 
-        public async Task DeleteCartById(int id)
+        public async Task DeleteCartById(int cartId)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@Id", cartId);
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
@@ -54,7 +54,7 @@ namespace RedBricksApi.Repository.Services
             }
         }
 
-        public async Task<Cart> GetCartById(int id)
+        public async Task<Cart> GetCartById(int cartId)
         {
             try
             {
@@ -63,13 +63,13 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@Id", cartId);
                 await connection.OpenAsync();
                 using var reader = await command.ExecuteReaderAsync();
                 Cart cart = new Cart();
                 while (await reader.ReadAsync())
                 {
-                    cart.Id = reader.GetInt32(0);
+                    cart.CartId = reader.GetInt32(0);
                     cart.UserId = reader.GetInt32(1);
                     cart.CreatedOn = reader.GetDateTime(2);
                     cart.UpdatedOn = reader.GetDateTime(3);
@@ -99,7 +99,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     carts.Add(new Cart
                     {
-                        Id = reader.GetInt32(0),
+                        CartId = reader.GetInt32(0),
                         UserId = reader.GetInt32(1),
                         CreatedOn = reader.GetDateTime(2),
                         UpdatedOn = reader.GetDateTime(3)
@@ -123,7 +123,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", cart.Id);
+                command.Parameters.AddWithValue("@Id", cart.CartId);
                 command.Parameters.AddWithValue("@UserId", cart.UserId);
 
                 await connection.OpenAsync();
@@ -159,7 +159,7 @@ namespace RedBricksApi.Repository.Services
                 throw new NotImplementedException();
             }
         }
-        public async Task DeleteCartItems(int id)
+        public async Task DeleteCartItems(int cartItemid)
         {
             try
             {
@@ -168,7 +168,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@Id", cartItemid);
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
@@ -196,12 +196,16 @@ namespace RedBricksApi.Repository.Services
                 {
                     cartitemlist.Add(new CartItems
                     {
-                        Id = reader.GetInt32(0),
+                        CartItemId = reader.GetInt32(0),
                         CartId = reader.GetInt32(1),
                         ServiceId = reader.GetInt32(2),
-                        Quantity = reader.GetDecimal(3),
-                        Price = reader.GetDecimal(4),
-                        AddedAt = reader.GetDateTime(5)
+                        ServiceName=reader.GetString(3),
+                        Quantity = reader.GetDecimal(4),
+                        AddressId = reader.GetInt32(5),
+                        AddressName = reader.GetString(6),
+                        ServiceDate=reader.GetDateTime(7),
+                        Price = reader.GetDecimal(8),
+                        AddedAt = reader.GetDateTime(9)
                     });
                 }
                 return cartitemlist;
@@ -212,7 +216,7 @@ namespace RedBricksApi.Repository.Services
             }
         }
 
-        public async Task<CartItems> GetCartItemsById(int id)
+        public async Task<CartItems> GetCartItemsById(int cartItemId)
         {
             try
             {
@@ -221,18 +225,22 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@Id", cartItemId);
                 await connection.OpenAsync();
                 using var reader = await command.ExecuteReaderAsync();
                 CartItems cartitems = new CartItems();
                 while (await reader.ReadAsync())
                 {
-                    cartitems.Id = reader.GetInt32(0);
+                    cartitems.CartItemId = reader.GetInt32(0);
                     cartitems.CartId = reader.GetInt32(1);
                     cartitems.ServiceId = reader.GetInt32(2);
-                    cartitems.Quantity = reader.GetDecimal(3);
-                    cartitems.Price = reader.GetDecimal(4);
-                    cartitems.AddedAt = reader.GetDateTime(5);
+                    cartitems.ServiceName = reader.GetString(3);
+                    cartitems.Quantity = reader.GetDecimal(4);
+                    cartitems.AddressId = reader.GetInt32(5);
+                    cartitems.AddressName = reader.GetString(6);
+                    cartitems.ServiceDate = reader.GetDateTime(7);
+                    cartitems.Price = reader.GetDecimal(8);
+                    cartitems.AddedAt = reader.GetDateTime(9);
                 }
                 return cartitems;
             }
@@ -251,7 +259,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", cartitems.Id);
+                command.Parameters.AddWithValue("@Id", cartitems.CartItemId);
                 command.Parameters.AddWithValue("@CartId", cartitems.CartId);
                 command.Parameters.AddWithValue("@ServiceId", cartitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", cartitems.Quantity);

@@ -17,7 +17,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", orderitems.Id);
+                command.Parameters.AddWithValue("@Id", orderitems.OrderItemId);
                 command.Parameters.AddWithValue("@OrderId", orderitems.OrderId);
                 command.Parameters.AddWithValue("@ServiceId", orderitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", orderitems.Quantity);
@@ -67,7 +67,7 @@ namespace RedBricksApi.Repository.Services
                 OrderItems orderitems = new OrderItems();
                 while (await reader.ReadAsync())
                 {
-                    orderitems.Id = reader.GetInt32(0);
+                    orderitems.OrderItemId = reader.GetInt32(0);
                     orderitems.OrderId = reader.GetInt32(1);
                     orderitems.ServiceId = reader.GetInt32(2);
                     orderitems.Quantity = reader.GetDecimal(3);
@@ -99,7 +99,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     orderitemslist.Add(new OrderItems
                     {
-                        Id = reader.GetInt32(0),
+                        OrderItemId = reader.GetInt32(0),
                         OrderId = reader.GetInt32(1),
                         ServiceId = reader.GetInt32(2),
                         Quantity = reader.GetDecimal(3),
@@ -123,7 +123,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-                command.Parameters.AddWithValue("@Id", orderitems.Id);
+                command.Parameters.AddWithValue("@Id", orderitems.OrderItemId);
                 command.Parameters.AddWithValue("@OrderId", orderitems.OrderId);
                 command.Parameters.AddWithValue("@ServiceId", orderitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", orderitems.Quantity);

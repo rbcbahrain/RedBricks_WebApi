@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\OrderItemController.cs" />
     <Compile Remove="Models\DbContextClass.cs" />
+    <Compile Remove="Repository\Interfaces\IOrderItemService.cs" />
+    <Compile Remove="Repository\Services\OrderItemService.cs" />
     <Compile Remove="Repository\Services\UserService - Copy.cs" />
   </ItemGroup>
 

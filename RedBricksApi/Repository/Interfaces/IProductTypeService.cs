@@ -9,5 +9,6 @@ namespace RedBricksApi.Repository.Interfaces
         public Task DeleteProductType(int id);
         public Task<IEnumerable<ProductType>> GetProductTypes();
         public Task<ProductType> GetProductTypeById(int id);
+        public Task<bool> CheckProductTypeExistAsync(string productTypeName);
     }
 }

@@ -70,14 +70,30 @@ namespace RedBricksApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductType>>> GetProductType()
         {
-            return Ok(await productTypeService.GetProductTypes());
+            try
+            {
+                return Ok(await productTypeService.GetProductTypes());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ProductType>> GetById(int id)
         {
+            try
+            {
+                return Ok(await productTypeService.GetProductTypeById(id));
+            }
+            catch (Exception)
+            {
 
-            return Ok(await productTypeService.GetProductTypeById(id));
+                throw;
+            }
+            
         }
 
         [HttpPut]
@@ -102,10 +118,34 @@ namespace RedBricksApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await productTypeService.DeleteProductType(id);
-            return NoContent();
+            try
+            {
+                await productTypeService.DeleteProductType(id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
 
         }
+        [HttpGet("CheckProductType")]
+        public async Task<bool> CheckProductTypeExits(string productTypeName)
+        {
+            try
+            {
+                bool result = await productTypeService.CheckProductTypeExistAsync(productTypeName);
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
     }
 }

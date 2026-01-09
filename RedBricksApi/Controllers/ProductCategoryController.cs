@@ -64,9 +64,6 @@ namespace RedBricksApi.Controllers
                     message = ex.Message
                 });
             }
-
-
-
         }
 
         [HttpGet("GetCategorylist")]
@@ -103,9 +100,32 @@ namespace RedBricksApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await productCategoryService.DeleteProductCategory(id);
-            return NoContent();
+            try
+            {
+                await productCategoryService.DeleteProductCategory(id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+            
+
+        }
+        [HttpGet("CheckCategory")]
+        public async Task<bool> CheckCategoryExits(string categoryName)
+        {
+            try
+            {
+                bool result = await productCategoryService.CheckCategoryExistAsync(categoryName);
+                return result;  
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

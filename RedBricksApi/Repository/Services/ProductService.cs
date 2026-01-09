@@ -150,6 +150,30 @@ namespace RedBricksApi.Repository.Services
                 throw new NotImplementedException();
             }
         }
+        public async Task<bool> CheckProductExistAsync(string productName)
+        {
+            try
+            {
+
+                using var connection = new SqlConnection(connectionString);
+                using var command = new SqlCommand("CheckProductExist", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Name", productName);
+                await connection.OpenAsync();
+                using var reader = await command.ExecuteReaderAsync();
+                if (reader.HasRows)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
     }
 }

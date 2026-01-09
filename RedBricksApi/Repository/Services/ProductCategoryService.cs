@@ -144,5 +144,29 @@ namespace RedBricksApi.Repository.Services
                 throw new NotImplementedException();
             }
         }
+        public async Task<bool> CheckCategoryExistAsync(string categoryName)
+        {
+            try
+            {
+
+                using var connection = new SqlConnection(connectionString);
+                using var command = new SqlCommand("CheckCategoryExist", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Name", categoryName);
+                await connection.OpenAsync();
+                using var reader = await command.ExecuteReaderAsync();
+                if (reader.HasRows)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

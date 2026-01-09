@@ -10,99 +10,167 @@ namespace RedBricksApi.Controllers
     [ApiController]
     public class CartController( ICartService cartService) : ControllerBase
     {
-
-
-
         [HttpPost("AddCart")]
         public async Task<IActionResult> Create([FromBody] CartItems cartItems)
         {
-           
-            int cartId = await cartService.AddCart(cartItems.UserId);
-            if (cartId != 0)
+            try
             {
-                cartItems.CartId = cartId;
+                int cartId = await cartService.AddCart(cartItems.UserId);
+                if (cartId != 0)
+                {
+                    cartItems.CartId = cartId;
 
-                await cartService.AddCartItems(cartItems);
+                    await cartService.AddCartItems(cartItems);
+                    return Ok(new
+                    {
+                        message = "Cart added successfully"
+
+                    });
+                }
                 return Ok(new
                 {
-                    message = "Cart added successfully"
+                    message = "Cart added failed"
 
                 });
             }
-            return Ok(new
+            catch (Exception)
             {
-                message = "Cart added failed"
 
-            });
+                throw;
+            }
 
         }
 
         [HttpGet("GetCartlist")]
         public async Task<ActionResult<IEnumerable<Cart>>> GetCarts()
         {
-            return Ok(await cartService.GetCarts());
+            try
+            {
+                return Ok(await cartService.GetCarts());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
 
         }
-        [HttpGet("GetCartById/{id:int}")]
-        //[HttpGet]
-        public async Task<ActionResult<Cart>> GetById(int id)
-        {
 
-            return Ok(await cartService.GetCartById(id));
+        [HttpGet("GetCartById/{id:int}")]
+        public async Task<ActionResult<Cart>> GetCartById(int id)
+        {
+            try
+            {
+                return Ok(await cartService.GetCartById(id));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         [HttpPut("updateCart")]
         public async Task<IActionResult> Update([FromBody] Cart cart)
         {
-            await cartService.UpdateCart(cart);
-            return NoContent();
+            try
+            {
+                await cartService.UpdateCart(cart);
+                return NoContent();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
         [HttpDelete("DeleteCart/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await cartService.DeleteCartById(id);
-            return NoContent();
+            try
+            {
+                await cartService.DeleteCartById(id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
 
         [HttpPost("AddCartItems")]
         public async Task<IActionResult> CreateCartItem([FromBody] CartItems cartitems)
         {
-            await cartService.AddCartItems(cartitems);
-            return CreatedAtAction(nameof(GetById), new { id = cartitems.Id }, cartitems);
+            try
+            {
+                await cartService.AddCartItems(cartitems);
+                return CreatedAtAction(nameof(GetCartItemsById), new { id = cartitems.CartId }, cartitems);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpGet("GetCartItemslist")]
         public async Task<ActionResult<IEnumerable<CartItems>>> GetCartItems(int userId)
         {
-            return Ok(await cartService.GetCartItems(userId));
+            try
+            {
+                return Ok(await cartService.GetCartItems(userId));
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
         [HttpGet("GetCartItemsById/{id:int}")]
         
         public async Task<ActionResult<CartItems>> GetCartItemsById(int id)
         {
+            try
+            {
+                return Ok(await cartService.GetCartItemsById(id));
+            }
+            catch (Exception)
+            {
 
-            return Ok(await cartService.GetCartItemsById(id));
+                throw;
+            }
         }
 
         [HttpPut("updateCartItem")]
         public async Task<IActionResult> Update([FromBody] CartItems cartitems)
         {
-            await cartService.UpdateCartItems(cartitems);
-            return NoContent();
+            try
+            {
+                await cartService.UpdateCartItems(cartitems);
+                return NoContent();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
         [HttpDelete("DeleteCartItem/{id:int}")]
-        //[HttpDelete]
         public async Task<IActionResult> DeleteCartItem(int id)
         {
-            await cartService.DeleteCartItems(id);
-            return NoContent();
+            try
+            {
+                await cartService.DeleteCartItems(id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
         }
-
-
     }
 }
