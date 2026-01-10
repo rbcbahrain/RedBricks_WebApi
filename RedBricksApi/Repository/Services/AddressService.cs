@@ -18,6 +18,8 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+                command.Parameters.AddWithValue("@ContactName", address.ContactName);
+                command.Parameters.AddWithValue("@ContactNo", address.ContactNo);
                 command.Parameters.AddWithValue("@Line1", address.Line1);
                 command.Parameters.AddWithValue("@Line2", address.Line2);
                 command.Parameters.AddWithValue("@Line3", address.Line3);
@@ -71,15 +73,17 @@ namespace RedBricksApi.Repository.Services
                 while (await reader.ReadAsync())
                 {
                     address.AddressId= reader.GetInt32(0);
-                    address.Line1 = reader.GetString(1);
-                    address.Line2 = reader.GetString(2);
-                    address.Line3 = reader.GetString(3);
-                    address.City = reader.GetInt32(4);
-                    address.Country=reader.GetInt32(5);
-                    address.UserId= reader.GetInt32(6);
-                    address.Location = reader.GetString(7);
-                    address.CreatedOn = reader.GetDateTime(8);
-                    address.UpdatedOn= reader.GetDateTime(9);
+                    address.ContactName = reader.GetString(1);
+                    address.ContactNo= reader.GetString(2);
+                    address.Line1 = reader.GetString(3);
+                    address.Line2 = reader.GetString(4);
+                    address.Line3 = reader.GetString(5);
+                    address.City = reader.GetInt32(6);
+                    address.Country=reader.GetInt32(7);
+                    address.UserId= reader.GetInt32(8);
+                    address.Location = reader.GetString(9);
+                    address.CreatedOn = reader.GetDateTime(10);
+                    address.UpdatedOn= reader.GetDateTime(11);
                 }
                 return address;
             }
@@ -107,15 +111,17 @@ namespace RedBricksApi.Repository.Services
                     addresses.Add(new Address
                     {
                         AddressId = reader.GetInt32(0),
-                        Line1 = reader.GetString(1),
-                        Line2 = reader.GetString(2),
-                        Line3 = reader.GetString(3),
-                        City = reader.GetInt32(4),
-                        Country = reader.GetInt32(5),
-                        UserId = reader.GetInt32(6),
-                        Location = reader.GetString(7),
-                        CreatedOn=reader.GetDateTime(8),
-                        UpdatedOn=reader.GetDateTime(9)
+                        ContactName = reader.GetString(1),
+                        ContactNo = reader.GetString(2),
+                        Line1 = reader.GetString(3),
+                        Line2 = reader.GetString(4),
+                        Line3 = reader.GetString(5),
+                        City = reader.GetInt32(6),
+                        Country = reader.GetInt32(7),
+                        UserId = reader.GetInt32(8),
+                        Location = reader.GetString(9),
+                        CreatedOn=reader.GetDateTime(10),
+                        UpdatedOn=reader.GetDateTime(11)
                         
                     });
                 }
@@ -136,6 +142,8 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+                command.Parameters.AddWithValue("@ContactName", address.ContactName);
+                command.Parameters.AddWithValue("@ContactNo", address.ContactNo);
                 command.Parameters.AddWithValue("@Id", address.AddressId);
                 command.Parameters.AddWithValue("@Line1", address.Line1);
                 command.Parameters.AddWithValue("@Line2", address.Line2);

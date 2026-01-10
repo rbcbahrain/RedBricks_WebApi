@@ -7,6 +7,8 @@ namespace RedBricksApi.Models
 
         [Key]
         public int AddressId { get; set; }
+        public string ContactName { get; set; }
+        public string ContactNo { get; set; }
         public string Line1 { get; set; } = string.Empty;
         public string Line2 { get; set; } = string.Empty;
         public string Line3 { get; set; } = string.Empty;

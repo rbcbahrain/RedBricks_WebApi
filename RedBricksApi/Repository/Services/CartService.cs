@@ -149,6 +149,8 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@ServiceId", cartitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", cartitems.Quantity);
                 command.Parameters.AddWithValue("@Price", cartitems.Price);
+                command.Parameters.AddWithValue("@AddressId", cartitems.AddressId);
+                command.Parameters.AddWithValue("@ServiceDate", cartitems.ServiceDate); 
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -200,7 +202,7 @@ namespace RedBricksApi.Repository.Services
                         CartId = reader.GetInt32(1),
                         ServiceId = reader.GetInt32(2),
                         ServiceName=reader.GetString(3),
-                        Quantity = reader.GetDecimal(4),
+                        Quantity = reader.GetInt32(4),
                         AddressId = reader.GetInt32(5),
                         AddressName = reader.GetString(6),
                         ServiceDate=reader.GetDateTime(7),
@@ -235,7 +237,7 @@ namespace RedBricksApi.Repository.Services
                     cartitems.CartId = reader.GetInt32(1);
                     cartitems.ServiceId = reader.GetInt32(2);
                     cartitems.ServiceName = reader.GetString(3);
-                    cartitems.Quantity = reader.GetDecimal(4);
+                    cartitems.Quantity = reader.GetInt32(4);
                     cartitems.AddressId = reader.GetInt32(5);
                     cartitems.AddressName = reader.GetString(6);
                     cartitems.ServiceDate = reader.GetDateTime(7);
@@ -264,6 +266,8 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@ServiceId", cartitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", cartitems.Quantity);
                 command.Parameters.AddWithValue("@Price", cartitems.Price);
+                command.Parameters.AddWithValue("@AddressId", cartitems.AddressId);
+                command.Parameters.AddWithValue("@ServiceDate", cartitems.ServiceDate);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

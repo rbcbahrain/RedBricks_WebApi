@@ -7,7 +7,7 @@
         public int UserId { get; set; }
         public int ServiceId { get; set; }  
         public string ServiceName { get; set; }=string.Empty;
-        public decimal Quantity { get; set; }   
+        public int Quantity { get; set; }   
         public int AddressId { get; set; }
         public string AddressName { get; set; } = string.Empty;
         public DateTime ServiceDate { get; set; }

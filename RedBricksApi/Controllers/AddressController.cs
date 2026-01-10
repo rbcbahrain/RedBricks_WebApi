@@ -17,7 +17,7 @@ namespace RedBricksApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = address.AddressId}, address);
         }
 
-        [HttpGet("Getaddresslist")]
+        [HttpGet("Getaddresslist/{userid}")]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddress(int userid)
         {
             return Ok(await addressService.GetAddress(userid));
