@@ -198,23 +198,23 @@ namespace RedBricksApi.Repository.Services
                 {
                     cartitemlist.Add(new CartItems
                     {
-                        CartItemId = reader.GetInt32(0),
-                        CartId = reader.GetInt32(1),
-                        ServiceId = reader.GetInt32(2),
-                        ServiceName=reader.GetString(3),
-                        Quantity = reader.GetInt32(4),
-                        AddressId = reader.GetInt32(5),
-                        AddressName = reader.GetString(6),
-                        ServiceDate=reader.GetDateTime(7),
-                        Price = reader.GetDecimal(8),
-                        AddedAt = reader.GetDateTime(9)
+                        CartItemId = reader.GetInt32(reader.GetOrdinal("ID")),
+                        CartId = reader.GetInt32(reader.GetOrdinal("CARTID")),
+                        ServiceId = reader.GetInt32(reader.GetOrdinal("SERVICEID")),
+                        ServiceName = reader.IsDBNull(reader.GetOrdinal("SERVICENAME")) ? null : reader.GetString(reader.GetOrdinal("SERVICENAME")),
+                        Quantity = reader.GetInt32(reader.GetOrdinal("QUANTITY")),
+                        AddressId = reader.IsDBNull(reader.GetOrdinal("ADDRESSID")) ? 0 : reader.GetInt32(reader.GetOrdinal("ADDRESSID")),
+                        AddressName = reader.IsDBNull(reader.GetOrdinal("SERVICEADDRESS")) ? null : reader.GetString(reader.GetOrdinal("SERVICEADDRESS")),
+                        ServiceDate = reader.GetFieldValue<DateTime>(reader.GetOrdinal("SERVICEDATE")),
+                        Price = reader.IsDBNull(reader.GetOrdinal("PRICE")) ? 0 : reader.GetDecimal(reader.GetOrdinal("PRICE")),
+                        AddedAt = reader.GetFieldValue<DateTime>(reader.GetOrdinal("ADDEDAT"))
                     });
                 }
                 return cartitemlist;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw new Exception(ex.Message);
             }
         }
 
