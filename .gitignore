@@ -40,3 +40,4 @@ Thumbs.db
 # Custom files to ignore
 /RedBricksApi/appsettings.json
 /RedBricksApi/wwwroot/Pictures/Product
+/RedBricksApi/wwwroot/Pictures/Category
