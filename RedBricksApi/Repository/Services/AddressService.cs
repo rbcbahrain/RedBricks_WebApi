@@ -110,19 +110,19 @@ namespace RedBricksApi.Repository.Services
                 {
                     addresses.Add(new Address
                     {
-                        AddressId = reader.GetInt32(0),
-                        ContactName = reader.GetString(1),
-                        ContactNo = reader.GetString(2),
-                        Line1 = reader.GetString(3),
-                        Line2 = reader.GetString(4),
-                        Line3 = reader.GetString(5),
-                        City = reader.GetInt32(6),
-                        Country = reader.GetInt32(7),
-                        UserId = reader.GetInt32(8),
-                        Location = reader.GetString(9),
-                        CreatedOn=reader.GetDateTime(10),
-                        UpdatedOn=reader.GetDateTime(11)
-                        
+                        AddressId =  reader["ID"] != DBNull.Value ? Convert.ToInt32(reader["ID"]) : 0,
+                        ContactName = reader["CONTACTNAME"] != DBNull.Value ? reader["CONTACTNAME"].ToString() : string.Empty,
+                        ContactNo = reader["CONTACTNO"] != DBNull.Value ? reader["CONTACTNO"].ToString() : string.Empty,
+                        Line1 = reader["LINE1"] != DBNull.Value ? reader["LINE1"].ToString() : string.Empty, 
+                        Line2 = reader["LINE2"] != DBNull.Value ? reader["LINE2"].ToString() : string.Empty, 
+                        Line3 = reader["LINE3"] != DBNull.Value ? reader["LINE3"].ToString() : string.Empty, 
+                        City = reader["CITY"] != DBNull.Value ? Convert.ToInt32(reader["CITY"]) : 0,
+                        Country = reader["COUNTRY"] != DBNull.Value ? Convert.ToInt32(reader["COUNTRY"]) : 0, 
+                        UserId = reader["USERID"] != DBNull.Value ? Convert.ToInt32(reader["USERID"]) : 0,  //reader.GetInt32(8),
+                        Location =reader["LOCATION"] != DBNull.Value ? reader["LOCATION"].ToString() : string.Empty, // != DBNull.Value ? Convert.ToString(reader["LOCATION"]) : string.Empty, // reader.GetString(9),
+                        CreatedOn = reader.GetDateTime(reader.GetOrdinal("CREATEDON")), //reader["CREATEDON"] //reader.GetDateTime(10),
+                        UpdatedOn = reader.GetDateTime(reader.GetOrdinal("UpdatedOn"))
+
                     });
                 }
                 return addresses;
