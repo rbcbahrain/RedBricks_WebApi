@@ -26,8 +26,8 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 //exception handler
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
+//builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+//builder.Services.AddProblemDetails();
 
 // Add services to the container.
 
@@ -48,7 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseExceptionHandler();
+//app.UseExceptionHandler();
 // Order matters: UseCors should be between UseRouting and UseAuthorization
 app.UseCors(MyAllowSpecificOrigins);
 

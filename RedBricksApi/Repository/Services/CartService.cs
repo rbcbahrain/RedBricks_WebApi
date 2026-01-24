@@ -207,7 +207,9 @@ namespace RedBricksApi.Repository.Services
                         AddressName = reader.IsDBNull(reader.GetOrdinal("SERVICEADDRESS")) ? null : reader.GetString(reader.GetOrdinal("SERVICEADDRESS")),
                         ServiceDate = reader.GetFieldValue<DateTime>(reader.GetOrdinal("SERVICEDATE")),
                         Price = reader.IsDBNull(reader.GetOrdinal("PRICE")) ? 0 : reader.GetDecimal(reader.GetOrdinal("PRICE")),
-                        AddedAt = reader.GetFieldValue<DateTime>(reader.GetOrdinal("ADDEDAT"))
+                        Location = reader.IsDBNull(reader.GetOrdinal("LOCATION")) ? null : reader.GetString(reader.GetOrdinal("LOCATION")),
+                        AddedAt = reader.GetFieldValue<DateTime>(reader.GetOrdinal("ADDEDAT")),
+                        
                     });
                 }
                 return cartitemlist;
@@ -269,6 +271,27 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@AddressId", cartitems.AddressId);
                 command.Parameters.AddWithValue("@ServiceDate", cartitems.ServiceDate);
 
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public async Task UpdateCartItemsQty(CartItems cartitems)
+        {
+            try
+            {
+                using var connection = new SqlConnection(connectionString);
+                using var command = new SqlCommand("UpdateCartItemQty", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@CartItemId",cartitems.CartItemId);
+                command.Parameters.AddWithValue("@Quantity", cartitems.Quantity);
+ 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
 
