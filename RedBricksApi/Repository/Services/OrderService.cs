@@ -12,7 +12,7 @@ namespace RedBricksApi.Repository.Services
             try
             {
                 using var connection = new SqlConnection(connectionString);
-                using var command = new SqlCommand("OrdderCheckout", connection)
+                using var command = new SqlCommand("OrderCheckout", connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
@@ -177,8 +177,8 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@ServiceId", orderitems.ServiceId);
                 command.Parameters.AddWithValue("@Quantity", orderitems.Quantity);
                 command.Parameters.AddWithValue("@Price", orderitems.Price);
-                command.Parameters.AddWithValue("@AdressId", orderitems.AddressId);
-                command.Parameters.AddWithValue("@ServiceDate", orderitems.ServiceDate);
+                command.Parameters.AddWithValue("@AddressId", orderitems.AddressId);
+                command.Parameters.AddWithValue("@Servicedate", orderitems.ServiceDate);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

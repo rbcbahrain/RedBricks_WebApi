@@ -10,6 +10,8 @@
         public int AddressId { get; set; }
         public string AddressName { get; set; } = string.Empty;
         public DateTime ServiceDate { get; set; }
+        public int UserId { get; set; }
+
 
     }
 }
