@@ -40,3 +40,8 @@ Thumbs.db
 # Custom files to ignore
 /RedBricksApi/appsettings.json
 /RedBricksApi/wwwroot/Pictures/Product
+<<<<<<< Updated upstream
+=======
+/RedBricksApi/wwwroot/Pictures/Category
+/RedBricksApi/RedBricks_WebApi.7z
+>>>>>>> Stashed changes
