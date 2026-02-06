@@ -15,5 +15,7 @@ namespace RedBricksApi.Repository.Interfaces
         public Task DeleteCartItems(int cartItemId);
         public Task<IEnumerable<CartItems>> GetCartItems(int userId);
         public Task<CartItems> GetCartItemsById(int cartItemid);
+        public Task UpdateCartItemsQty(CartItems cartitems);
     }
+
 }

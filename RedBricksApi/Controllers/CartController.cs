@@ -158,6 +158,21 @@ namespace RedBricksApi.Controllers
                 throw;
             }
         }
+
+        [HttpPut("updateCartItemQty")]
+        public async Task<IActionResult> UpdateCartItemQty([FromBody] CartItems cartitems)
+        {
+            try
+            {
+                await cartService.UpdateCartItemsQty(cartitems);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        } 
         [HttpDelete("DeleteCartItem/{id:int}")]
         public async Task<IActionResult> DeleteCartItem(int id)
         {

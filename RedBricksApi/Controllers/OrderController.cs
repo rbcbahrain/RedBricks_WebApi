@@ -12,11 +12,11 @@ namespace RedBricksApi.Controllers
     {
 
         [HttpPost("CheckOut")]
-        public async Task<IActionResult> Create([FromBody] int userId)
+        public async Task<IActionResult> Create([FromBody] OrderItems orderitem)
         {
             try
             {
-                await orderService.AddOrders(userId);
+                await orderService.AddOrders(orderitem.UserId);
                 return Ok(new
                 {
                     message = "Order checkout successfully"
@@ -94,7 +94,7 @@ namespace RedBricksApi.Controllers
         
         
         [HttpPost("AddOrderItem")]
-        public async Task<IActionResult> Create([FromBody] OrderItems orderitem)
+        public async Task<IActionResult> CreateOrderItems([FromBody] OrderItems orderitem)
         {
             try
             {

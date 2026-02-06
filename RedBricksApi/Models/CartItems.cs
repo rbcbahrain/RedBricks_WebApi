@@ -12,6 +12,7 @@
         public string AddressName { get; set; } = string.Empty;
         public DateTime ServiceDate { get; set; }
         public decimal Price { get; set; } = 0;
+        public string Location { get; set; }
         public DateTime AddedAt { get; set; }
 
     }

@@ -1,3 +1,4 @@
+using RedBricksApi.Infrastructure;
 using RedBricksApi.Models;
 using RedBricksApi.Repository.Interfaces;
 using RedBricksApi.Repository.Services;
@@ -25,6 +26,11 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+//exception handler
+//builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+//builder.Services.AddProblemDetails();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -44,6 +50,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+//app.UseExceptionHandler();
 // Order matters: UseCors should be between UseRouting and UseAuthorization
 app.UseCors(MyAllowSpecificOrigins);
 
