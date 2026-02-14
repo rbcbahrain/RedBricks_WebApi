@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using RedBricksApi.Infrastructure;
 using RedBricksApi.Models;
 using RedBricksApi.Repository.Interfaces;
@@ -48,12 +49,21 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles(); // Enables wwwroot by default
 app.UseAuthorization();
 //app.UseExceptionHandler();
 // Order matters: UseCors should be between UseRouting and UseAuthorization
 app.UseCors(MyAllowSpecificOrigins);
 
+
+// Serve the Pictures folder
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Pictures")
+    ),
+    RequestPath = "/Pictures"
+});
 app.MapControllers();
 
 app.Run();
