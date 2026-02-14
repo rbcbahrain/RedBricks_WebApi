@@ -144,7 +144,7 @@ namespace RedBricksApi.Repository.Services
                 throw new NotImplementedException();
             }
         }
-        public async Task<bool> CheckCategoryExistAsync(string categoryName)
+        public async Task<bool> CheckCategoryExistAsync(int id, string categoryName)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace RedBricksApi.Repository.Services
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
-
+                command.Parameters.AddWithValue("@Id", id);
                 command.Parameters.AddWithValue("@Name", categoryName);
                 await connection.OpenAsync();
                 using var reader = await command.ExecuteReaderAsync();

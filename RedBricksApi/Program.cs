@@ -56,14 +56,14 @@ app.UseAuthorization();
 app.UseCors(MyAllowSpecificOrigins);
 
 
-// Serve the Pictures folder
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Pictures")
-    ),
-    RequestPath = "/Pictures"
-});
+//// Serve the Pictures folder
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), "Pictures")
+//    ),
+//    RequestPath = "/Pictures"
+//});
 app.MapControllers();
 
 app.Run();

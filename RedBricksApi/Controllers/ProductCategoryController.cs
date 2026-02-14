@@ -28,7 +28,7 @@ namespace RedBricksApi.Controllers
                     return BadRequest("Invalid product data.");
 
 
-                bool result = await productCategoryService.CheckCategoryExistAsync(productCategory.Name);
+                bool result = await productCategoryService.CheckCategoryExistAsync(productCategory.Id,productCategory.Name);
 
                 if (result == true)
                 {
@@ -100,7 +100,7 @@ namespace RedBricksApi.Controllers
             try
             {
 
-                bool result = await productCategoryService.CheckCategoryExistAsync(productCategory.Name);
+                bool result = await productCategoryService.CheckCategoryExistAsync(id, productCategory.Name);
 
                 if (result == true)
                 {
@@ -190,20 +190,20 @@ namespace RedBricksApi.Controllers
             
 
         }
-        [HttpGet("CheckCategory")]
-        public async Task<bool> CheckCategoryExits(string categoryName)
-        {
-            try
-            {
-                bool result = await productCategoryService.CheckCategoryExistAsync(categoryName);
-                return result;  
-            }
-            catch (Exception)
-            {
+        //[HttpGet("CheckCategory")]
+        //public async Task<bool> CheckCategoryExits(string categoryName)
+        //{
+        //    try
+        //    {
+        //        bool result = await productCategoryService.CheckCategoryExistAsync(categoryName);
+        //        return result;  
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
     }
 }
