@@ -174,6 +174,37 @@ namespace RedBricksApi.Repository.Services
                 throw new NotImplementedException();
             }
         }
+        public async Task<IEnumerable<ProductType>> LoadProductType()
+        {
+            try
+            {
+                var productTypes = new List<ProductType>();
+                using var connection = new SqlConnection(connectionString);
+                using var command = new SqlCommand("GetActiveTypeList", connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+                await connection.OpenAsync();
+                using var reader = await command.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    productTypes.Add(new ProductType
+                    {
+                        TypeId = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        CategoryId = reader.GetInt32(2)
+                        
+                    });
+                }
+                return productTypes;
+            }
+            catch (Exception)
+            {
+
+                throw new NotImplementedException();
+            }
+        }
 
     }
 }

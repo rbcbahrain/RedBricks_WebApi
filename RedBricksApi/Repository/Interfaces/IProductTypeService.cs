@@ -10,5 +10,6 @@ namespace RedBricksApi.Repository.Interfaces
         public Task<IEnumerable<ProductType>> GetProductTypes();
         public Task<ProductType> GetProductTypeById(int id);
         public Task<bool> CheckProductTypeExistAsync(int id, string productTypeName);
+        public Task<IEnumerable<ProductCategory>> LoadCategory();
     }
 }
