@@ -52,7 +52,7 @@ namespace RedBricksApi.Controllers
                         await productType.Image.CopyToAsync(stream);
                     }
 
-                    imagePath = $"/Picutures/Type/{fileName}";
+                    imagePath = $"/Pictures/Type/{fileName}";
                 }
                 productType.FileName = imagePath;
                 await productTypeService.AddProductType(productType);
@@ -158,7 +158,7 @@ namespace RedBricksApi.Controllers
                     }
 
                     // Correct URL path
-                    imagePath = $"/Pictures/Category/{fileName}";
+                    imagePath = $"/Pictures/Type/{fileName}";
                     productType.FileName = imagePath;
                 }
                 await productTypeService.UpdateProductType(productType);
