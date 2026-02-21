@@ -200,20 +200,20 @@ namespace RedBricksApi.Controllers
             
 
         }
-        [HttpGet("CheckProductType")]
-        public async Task<bool> CheckProductTypeExits(string productTypeName)
-        {
-            try
-            {
-                bool result = await productTypeService.CheckProductTypeExistAsync(productTypeName);
-                return result;
-            }
-            catch (Exception)
-            {
+        //[HttpGet("CheckProductType")]
+        //public async Task<bool> CheckProductTypeExits(string productTypeName)
+        //{
+        //    try
+        //    {
+        //        bool result = await productTypeService.CheckProductTypeExistAsync(productTypeName);
+        //        return result;
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
 
     }
