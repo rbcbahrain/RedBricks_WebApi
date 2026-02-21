@@ -108,7 +108,7 @@ namespace RedBricksApi.Repository.Services
                 };
                 command.Parameters.AddWithValue("@Name", productType.Name);
                 command.Parameters.AddWithValue("@Description", productType.Description);
-                command.Parameters.AddWithValue("@FilName", productType.FileName);
+                command.Parameters.AddWithValue("@FileName", productType.FileName);
                 command.Parameters.AddWithValue("@CategoryId", productType.CategoryId);
                 command.Parameters.AddWithValue("@Status", productType.Status);
 

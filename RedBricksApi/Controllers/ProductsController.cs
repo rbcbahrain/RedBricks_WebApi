@@ -78,7 +78,7 @@ namespace RedBricksApi.Controllers
                         await product.Image.CopyToAsync(stream);
                     }
 
-                    imagePath = $"/Picutures/Product/{fileName}";
+                    imagePath = $"/Pictures/Product/{fileName}";
                 }
                 product.FileName = imagePath;
                 await productService.AddProductAsync(product);
