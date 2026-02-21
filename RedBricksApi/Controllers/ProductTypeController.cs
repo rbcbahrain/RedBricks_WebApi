@@ -13,8 +13,8 @@ namespace RedBricksApi.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProductType productType)
+        [HttpPost("AddType")]
+        public async Task<IActionResult> Create([FromForm] ProductType productType)
         {
 
             if (productType == null)
@@ -26,6 +26,13 @@ namespace RedBricksApi.Controllers
 
                 if (!ModelState.IsValid)
                     return BadRequest("Invalid product type data.");
+
+                bool result = await productTypeService.CheckProductTypeExistAsync(productType.TypeId, productType.Name);
+                if (result == true)
+                {
+                    Console.WriteLine(productType.Name + "Already Exist");
+                    return Conflict(new { message = "Name already exists" });
+                }
 
                 string imagePath = string.Empty;
 
@@ -67,7 +74,7 @@ namespace RedBricksApi.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("GetTypeList")]
         public async Task<ActionResult<IEnumerable<ProductType>>> GetProductType()
         {
             try
@@ -96,30 +103,92 @@ namespace RedBricksApi.Controllers
             
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] ProductType productType)
+        [HttpPut("UpdateType/{id}")]
+        public async Task<IActionResult> Update(int id,[FromForm] ProductType productType)
         {
             if (productType == null)
             {
                 return BadRequest();
             }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalide product type data");
+            }
+
             try
             {
+                bool result = await productTypeService.CheckProductTypeExistAsync(id, productType.Name);
+                if (result == true)
+                {
+                    Console.WriteLine(productType.Name + "Already Exist");
+                    return Conflict(new { message = "Name already exists" });
+                }
+
+                productType.TypeId = id;
+
+                string imagePath = string.Empty;
+                var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "Type");
+
+                // Ensure the folder exists
+                if (!Directory.Exists(uploadDir))
+                    Directory.CreateDirectory(uploadDir);
+
+                if (productType.Image != null && productType.Image.Length > 0)
+                {
+                    // Delete old image if exists
+                    if (!string.IsNullOrEmpty(productType.FileName))
+                    {
+                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", productType.FileName.TrimStart('/').Replace("/", "\\"));
+                        if (System.IO.File.Exists(oldFilePath))
+                            System.IO.File.Delete(oldFilePath);
+                    }
+
+                    // Ensure extension exists
+                    var extension = Path.GetExtension(productType.Image.FileName);
+                    if (string.IsNullOrEmpty(extension))
+                        extension = ".png";
+
+                    string[] fileRef = productType.FileName.Split('/');
+                    var fileName = fileRef[3]; // Guid.NewGuid() + extension;
+                    var filePath = Path.Combine(uploadDir, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await productType.Image.CopyToAsync(stream);
+                    }
+
+                    // Correct URL path
+                    imagePath = $"/Pictures/Category/{fileName}";
+                    productType.FileName = imagePath;
+                }
                 await productTypeService.UpdateProductType(productType);
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Console.WriteLine(ex);
+                return StatusCode(500, "Internal server error");
             }
 
         }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("Delete/{strRef}")]
+        public async Task<IActionResult> Delete(string strRef)
         {
             try
             {
+                string[] strrefval = strRef.Split(',');
+                int id = Convert.ToInt32(strrefval[0].Trim());
+                string fileName = strrefval[1].Trim();
+
+                if (fileName != "")
+                {
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "Type");
+
+                    var oldFilePath = Path.Combine(uploadDir, fileName);
+                    System.IO.File.Delete(oldFilePath);
+                } 
+
                 await productTypeService.DeleteProductType(id);
                 return NoContent();
             }

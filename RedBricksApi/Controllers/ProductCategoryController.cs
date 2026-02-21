@@ -78,7 +78,16 @@ namespace RedBricksApi.Controllers
         [HttpGet("GetCategorylist")]
         public async Task<ActionResult<IEnumerable<ProductCategory>>> GetProductCategory()
         {
-            return Ok(await productCategoryService.GetProductCategories());
+            try
+            {
+                return Ok(await productCategoryService.GetProductCategories());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
 
         }
         [HttpGet("{id:int}")]
@@ -95,7 +104,7 @@ namespace RedBricksApi.Controllers
                 return BadRequest();
 
             if (!ModelState.IsValid)
-                return BadRequest("Invalid product data.");
+                return BadRequest("Invalid product category data.");
 
             try
             {
