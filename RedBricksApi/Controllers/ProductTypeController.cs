@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using RedBricksApi.Models;
 using RedBricksApi.Repository.Interfaces;
 using RedBricksApi.Repository.Services;
@@ -200,21 +201,36 @@ namespace RedBricksApi.Controllers
             
 
         }
-        //[HttpGet("CheckProductType")]
-        //public async Task<bool> CheckProductTypeExits(string productTypeName)
-        //{
-        //    try
-        //    {
-        //        bool result = await productTypeService.CheckProductTypeExistAsync(productTypeName);
-        //        return result;
-        //    }
-        //    catch (Exception)
-        //    {
+        [HttpGet("LoadCategory")]
+        public async Task<ActionResult<IEnumerable<ProductCategory>>> LoadCategory()
+        {
+            try
+            {
+                return Ok(await productTypeService.LoadCategory());
+            }
+            catch (Exception)
+            {
 
-        //        throw;
-        //    }
-        //}
+                throw;
+            }
+
+        }
+
+            //[HttpGet("CheckProductType")]
+            //public async Task<bool> CheckProductTypeExits(string productTypeName)
+            //{
+            //    try
+            //    {
+            //        bool result = await productTypeService.CheckProductTypeExistAsync(productTypeName);
+            //        return result;
+            //    }
+            //    catch (Exception)
+            //    {
+
+            //        throw;
+            //    }
+            //}
 
 
+        }
     }
-}

@@ -78,7 +78,7 @@ namespace RedBricksApi.Controllers
                         await product.Image.CopyToAsync(stream);
                     }
 
-                    imagePath = $"/Picutures/Product/{fileName}";
+                    imagePath = $"/Pictures/Product/{fileName}";
                 }
                 product.FileName = imagePath;
                 await productService.AddProductAsync(product);
@@ -192,6 +192,21 @@ namespace RedBricksApi.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpGet("LoadProductType")]
+        public async Task<ActionResult<IEnumerable<ProductType>>> LoadProductType()
+        {
+            try
+            {
+                return Ok(await productService.LoadProductType());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
         //[HttpGet("CheckProduct")]
         //public async Task<bool> CheckProductExits(string productName)
