@@ -51,6 +51,14 @@ namespace RedBricksApi.Controllers
 
                 if (!ModelState.IsValid)
                     return BadRequest("Invalid product data.");
+                bool result = await productService.CheckProductExistAsync(product.ProductId, product.Name);
+
+                if (result == true)
+                {
+                    Console.WriteLine(product.Name + "already Exist");
+                    return Conflict(new { message = "Name already exists" });
+
+                }
 
                 string imagePath=string.Empty;
 
@@ -91,51 +99,114 @@ namespace RedBricksApi.Controllers
             }
 
         }
-        [HttpPut("updateproduct")]
-        public async Task<IActionResult> Update([FromBody] Product product)
+        [HttpPut("updateproduct/{id}")]
+        public async Task<IActionResult> Update(int id,[FromForm] Product product)
         {
             if (product == null)
             {
                 return BadRequest();
             }
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid product data.");
+
+                try
+                {
+
+                    bool result = await productService.CheckProductExistAsync(id, product.Name);
+
+                    if (result == true)
+                    {
+                        Console.WriteLine(product.Name + "already Exist");
+                        return Conflict(new { message = "Name already exists" });
+
+                    }
+
+                    product.ProductId = id;
+
+                    string imagePath = string.Empty;
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "Product");
+
+                    // Ensure the folder exists
+                    if (!Directory.Exists(uploadDir))
+                        Directory.CreateDirectory(uploadDir);
+
+                    if (product.Image != null && product.Image.Length > 0)
+                    {
+                        // Delete old image if exists
+                        if (!string.IsNullOrEmpty(product.FileName))
+                        {
+                            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", product.FileName.TrimStart('/').Replace("/", "\\"));
+                            if (System.IO.File.Exists(oldFilePath))
+                                System.IO.File.Delete(oldFilePath);
+                        }
+
+                        // Ensure extension exists
+                        var extension = Path.GetExtension(product.Image.FileName);
+                        if (string.IsNullOrEmpty(extension))
+                            extension = ".png";
+
+                        string[] fileRef = product.FileName.Split('/');
+                        var fileName = fileRef[3]; // Guid.NewGuid() + extension;
+                        var filePath = Path.Combine(uploadDir, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await product.Image.CopyToAsync(stream);
+                        }
+
+                        // Correct URL path
+                        imagePath = $"/Pictures/Category/{fileName}";
+                        product.FileName = imagePath;
+                    }
+
+                    await productService.UpdateProductAsync(product);
+                    return NoContent();        
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+        }
+        [HttpDelete("Deleteproduct/{strRef}")]
+        public async Task<IActionResult> DeleteProductAsync(string strRef)
+        {
             try
             {
-                await productService.UpdateProductAsync(product);
+                string[] strrefval = strRef.Split(',');
+                int id = Convert.ToInt32(strrefval[0].Trim());
+                string fileName = strrefval[1].Trim();
+
+                if (fileName != "")
+                {
+                    var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "Product");
+
+                    var oldFilePath = Path.Combine(uploadDir, fileName);
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                await productService.DeleteProductAsync(id);
                 return NoContent();
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+        //[HttpGet("CheckProduct")]
+        //public async Task<bool> CheckProductExits(string productName)
+        //{
+        //    try
+        //    {
+        //        bool result = await productService.CheckProductExistAsync(productName);
+        //        return result;
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
-        [HttpDelete("deleteproduct")]
-        public async Task<IActionResult> DeleteProductAsync(int Id)
-        {
-            try
-            {
-                await productService.DeleteProductAsync(Id);
-                return NoContent();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        [HttpGet("CheckProduct")]
-        public async Task<bool> CheckProductExits(string productName)
-        {
-            try
-            {
-                bool result = await productService.CheckProductExistAsync(productName);
-                return result;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
 
     }
