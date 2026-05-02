@@ -33,7 +33,7 @@ namespace RedBricksApi.Repository.Services
                         ProductId = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
-                        Type = reader.GetInt32(3),
+                        TypeId = reader.GetInt32(3),
                         Price = reader.GetDecimal(4),
                         Rating = reader.GetDecimal(5),
                         FileName = reader.GetString(6),
@@ -68,7 +68,7 @@ namespace RedBricksApi.Repository.Services
                     prodcut.ProductId = reader.GetInt32(0);
                     prodcut.Name = reader.GetString(1);
                     prodcut.Description = reader.GetString(2);
-                    prodcut.Type = reader.GetInt32(3);
+                    prodcut.TypeId = reader.GetInt32(3);
                     prodcut.Price = reader.GetDecimal(4);
                     prodcut.Rating = reader.GetDecimal(5);
                     prodcut.FileName = reader.GetString(6);
@@ -94,7 +94,7 @@ namespace RedBricksApi.Repository.Services
                 };
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
-                command.Parameters.AddWithValue("@Type", product.Type);
+                command.Parameters.AddWithValue("@Type", product.TypeId);
                 command.Parameters.AddWithValue("@Rating", product.Rating);
                 command.Parameters.AddWithValue("@FileName", product.FileName);
                 command.Parameters.AddWithValue("@Price", product.Price);
@@ -119,7 +119,7 @@ namespace RedBricksApi.Repository.Services
                 command.Parameters.AddWithValue("@Id", product.ProductId);
                 command.Parameters.AddWithValue("@Name", product.Name);
                 command.Parameters.AddWithValue("@Description", product.Description);
-                command.Parameters.AddWithValue("@Type", product.Type);
+                command.Parameters.AddWithValue("@Type", product.TypeId);
                 command.Parameters.AddWithValue("@Rating", product.Rating);
                 command.Parameters.AddWithValue("@FileName", product.FileName);
                 command.Parameters.AddWithValue("@Price", product.Price);

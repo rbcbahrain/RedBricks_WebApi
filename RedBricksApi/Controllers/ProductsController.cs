@@ -51,14 +51,14 @@ namespace RedBricksApi.Controllers
 
                 if (!ModelState.IsValid)
                     return BadRequest("Invalid product data.");
-                bool result = await productService.CheckProductExistAsync(product.ProductId, product.Name);
+                //bool result = await productService.CheckProductExistAsync(product.ProductId, product.Name);
 
-                if (result == true)
-                {
-                    Console.WriteLine(product.Name + "already Exist");
-                    return Conflict(new { message = "Name already exists" });
+                //if (result == true)
+                //{
+                //    Console.WriteLine(product.Name + "already Exist");
+                //    return Conflict(new { message = "Name already exists" });
 
-                }
+                //}
 
                 string imagePath=string.Empty;
 
@@ -154,9 +154,9 @@ namespace RedBricksApi.Controllers
                             await product.Image.CopyToAsync(stream);
                         }
 
-                        // Correct URL path
-                        imagePath = $"/Pictures/Category/{fileName}";
-                        product.FileName = imagePath;
+                    // Correct URL path
+                    imagePath = $"/Pictures/Product/{fileName}";
+                    product.FileName = imagePath;
                     }
 
                     await productService.UpdateProductAsync(product);

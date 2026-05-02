@@ -8,7 +8,7 @@ namespace RedBricksApi.Models
         public int ProductId { get; set; }
         public string Name { get; set; }=string.Empty;
         public string Description { get; set; }=string.Empty;
-        public int Type { get; set; }
+        public int TypeId { get; set; }
         public Decimal Price { get; set; }
         public Decimal Rating { get; set; }
         public string FileName { get; set; }=string.Empty;
